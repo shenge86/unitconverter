@@ -1,0 +1,1065 @@
+<html>
+<head>
+<title>Shen's Unit Converter</title>
+<script src="scripts/jquery-1.10.2.min.js"></script>
+<script src='scripts/randomquote.js'></script>
+<style>
+body {
+	width: 900px;	
+	margin: 0 auto;
+}
+
+h1 {
+	font-size: 2em;
+	padding-top: 1em;
+	line-height: 10%;
+}
+
+p {
+	line-height: 90%;
+}
+
+input[type='text'] {
+	float: right;	
+	width: 100%;
+	clear: both;
+}
+
+#intContent {
+	text-align: left;
+	border-style: solid;
+	border-width: 2px;
+	border-color: black;
+	padding: 0.5em;
+}
+
+#left {
+	float: left;
+	width: 33%;
+}
+
+#right {
+	float: right;
+	width: 33%;
+}
+
+/* Put center element one after left and right. */
+#center {
+	margin: 0 auto;
+	width: 33%;
+	padding-left: 1em;
+}
+</style>
+
+
+<script>
+$('document').ready(function() {
+	// RANDOM QUOTE	
+	$('#quoteline').html(displayQuote());
+
+	// DISTANCE
+	var dist;
+	$('#inputkm').change(function() {
+		dist = $(this).val();	
+		// metric
+		dist1 = dist*1000;
+		$('#inputm').val(dist1);
+		dist1 = dist*1000*100;
+		$('#inputcm').val(dist1);				
+		// english
+		// one mile is exactly 1609.344 meters
+		dist1 = dist/1.609344;
+		dist1 = dist1.toPrecision(6);
+		$('#inputmi').val(dist1);
+		dist1 = (dist/1.609344)*1760;
+		dist1 = dist1.toPrecision(6);
+		$('#inputyd').val(dist1);
+		dist1 = (dist/1.609344)*5280;
+		dist1 = dist1.toPrecision(6);
+		$('#inputft').val(dist1);
+		dist1 = (dist/1.609344)*5280*12;
+		dist1 = dist1.toPrecision(6);
+		$('#inputin').val(dist1);
+	});
+	
+	$('#inputm').change(function() {
+		dist = $(this).val();	
+		// metric
+		dist1 = dist/1000;
+		$('#inputkm').val(dist1);
+		dist1 = dist*100;
+		$('#inputcm').val(dist1);
+		// english
+		// one mile is exactly 1609.344 meters
+		dist1 = dist/1609.344;
+		dist1 = dist1.toPrecision(6);
+		$('#inputmi').val(dist1);
+		
+		dist1 = (dist*100)/2.54/36;
+		dist1 = dist1.toPrecision(6);
+		$('#inputyd').val(dist1);
+		
+		dist1 = (dist*100)/2.54/12;
+		dist1 = dist1.toPrecision(6);
+		$('#inputft').val(dist1);
+		
+		dist1 = (dist*100)/2.54;		
+		dist1 = dist1.toPrecision(6);
+		$('#inputin').val(dist1);
+	});
+	
+	$('#inputcm').change(function() {
+		dist = $(this).val();
+		// metric
+		dist1 = dist/1000/100;
+		$('#inputkm').val(dist1);
+		dist1 = dist/100;
+		$('#inputm').val(dist1);
+		// english
+		// one mile is exactly 1609.344 meters		
+		dist1 = dist/2.54/12/5280;
+		dist1 = dist1.toPrecision(6);
+		$('#inputmi').val(dist1);
+		
+		dist1 = dist/2.54/36;
+		dist1 = dist1.toPrecision(6);
+		$('#inputyd').val(dist1);
+		
+		dist1 = dist/2.54/12;
+		dist1 = dist1.toPrecision(6);
+		$('#inputft').val(dist1);		
+		
+		dist1 = dist/2.54;
+		dist1 = dist1.toPrecision(6);
+		$('#inputin').val(dist1);		
+	});
+	
+	$('#inputmi').change(function() {
+		dist = $(this).val();
+		// english
+		dist1 = dist*1760;
+		$('#inputyd').val(dist1);
+		dist1 = dist*5280;
+		$('#inputft').val(dist1);
+		dist1 = dist1*12;
+		$('#inputin').val(dist1);
+		// metric
+		dist1 = dist*1.609344;
+		dist1 = dist1.toPrecision(6);
+		$('#inputkm').val(dist1);
+		dist1 = dist1*1000;
+		dist1 = dist1.toPrecision(6);
+		$('#inputm').val(dist1);
+		dist1 = dist1*100;
+		dist1 = dist1.toPrecision(6);
+		$('#inputcm').val(dist1);
+	});
+	
+	$('#inputyd').change(function() {
+		dist = $(this).val();
+		// english		
+		dist1 = dist*36;
+		$('#inputin').val(dist1);
+		dist1 = dist*3;
+		$('#inputft').val(dist1);
+		dist1 = dist/1760;
+		dist1 = dist1.toPrecision(6);
+		$('#inputmi').val(dist1);		
+		// metric		
+		dist1 = (dist/1760)*1.609344;		
+		$('#inputkm').val(dist1);
+		dist1 = dist*36*2.54/100;
+		$('#inputm').val(dist1);
+		dist1 = dist*36*2.54;		
+		$('#inputcm').val(dist1);
+	});
+	
+	$('#inputft').change(function() {
+		dist = $(this).val();
+		// english
+		dist1 = dist/5280;
+		dist1 = dist1.toPrecision(6);
+		$('#inputmi').val(dist1);
+		
+		dist1 = dist/3;
+		dist1 = dist1.toPrecision(6);
+		$('#inputyd').val(dist1);
+		
+		dist1 = dist*12;
+		$('#inputin').val(dist1);		
+		
+		// metric
+		dist1 = (dist/5280)*1.609344;
+		dist1 = dist1.toPrecision(6);
+		$('#inputkm').val(dist1);
+		
+		dist1 = dist*12*2.54/100;
+		dist1 = dist1.toPrecision(6);
+		$('#inputm').val(dist1);
+		
+		dist1 = dist*12*2.54;
+		dist1 = dist1.toPrecision(6);
+		$('#inputcm').val(dist1);
+	});
+	
+	$('#inputin').change(function() {
+		dist = $(this).val();
+		// english
+		dist1 = dist/12;
+		dist1 = dist1.toPrecision(6);
+		$('#inputft').val(dist1);
+		
+		dist1 = dist/36;
+		dist1 = dist1.toPrecision(6);
+		$('#inputyd').val(dist1);		
+		
+		dist1 = dist/12/5280;
+		dist1 = dist1.toPrecision(6);
+		$('#inputmi').val(dist1);		
+		
+		// metric
+		dist1 = ((dist/12)/5280)/.621371;
+		dist1 = dist1.toPrecision(6);
+		$('#inputkm').val(dist1);
+		
+		dist1 = dist*2.54/100;
+		dist1 = dist1.toPrecision(6);
+		$('#inputm').val(dist1);
+		
+		dist1 = dist*2.54;
+		dist1 = dist1.toPrecision(6);
+		$('#inputcm').val(dist1);
+	});
+	
+	// MASS
+	var wt;
+	$('#inputlb').change(function() {
+		wt1 = $(this).val();
+		// english
+		wt = wt1*16;
+		$('#inputoz').val(wt);
+		wt = wt1/2000; // exact definition of short ton
+		wt = wt.toPrecision(6);
+		$('#inputtonshort').val(wt);
+		wt = wt1/2240; // exact definition of long ton
+		wt = wt.toPrecision(6);
+		$('#inputtonlong').val(wt);
+		// metric
+		wt = wt1*0.45359237; // exact definition of pound in kg
+		wt = wt.toPrecision(6);
+		$('#inputkg').val(wt);		
+		$('#inputg').val(wt*1000);		
+		$('#inputtonne').val(wt/1000);
+		// special
+		wt = wt1*0.45359237/150;
+		wt = wt.toPrecision(6);
+		$('#inputvg').val(wt);		
+	});
+	
+	$('#inputoz').change(function() {
+		wt1 = $(this).val();
+		// english
+		wt = wt1/16;
+		wt = wt.toPrecision(6);
+		$('#inputlb').val(wt);
+		wt = wt1/16/2000; // exact definition of short ton
+		wt = wt.toPrecision(6);
+		$('#inputtonshort').val(wt);
+		wt = wt1/16/2240; // exact definition of long ton
+		wt = wt.toPrecision(6);
+		$('#inputtonlong').val(wt);
+		
+		// metric
+		wt = wt1/16*0.45359237; // exact definition of pound in kg
+		wt = wt.toPrecision(6);
+		$('#inputkg').val(wt);
+		$('#inputg').val(wt*1000);
+		$('#inputtonne').val(wt/1000);
+		
+		// special
+		wt = wt1/16*0.45359237/150;
+		wt = wt.toPrecision(6);
+		$('#inputvg').val(wt);		
+	});
+	
+	$('#inputtonshort').change(function() {
+		wt1 = $(this).val();
+		// english
+		wt = wt1*2000; // exact definition of short ton
+		$('#inputlb').val(wt);
+		wt = wt1*2000*16;
+		$('#inputoz').val(wt);		
+		wt = wt1*2000/2240; // exact definition of long ton
+		wt = wt.toPrecision(6);
+		$('#inputtonlong').val(wt);
+		
+		// metric
+		wt = wt1*2000*0.45359237; // exact definition of pound in kg
+		$('#inputkg').val(wt);
+		$('#inputg').val(wt*1000);		
+		$('#inputtonne').val(wt/1000);
+		
+		// special
+		wt = wt1*2000*0.45359237/150;
+		wt = wt.toPrecision(6);
+		$('#inputvg').val(wt);		
+	});
+	
+	$('#inputtonlong').change(function() {
+		wt1 = $(this).val();
+		// english
+		wt = wt1*2240; // exact definition of short ton
+		$('#inputlb').val(wt);
+		wt = wt1*2240*16;
+		$('#inputoz').val(wt);		
+		wt = wt1*2240/2000; // exact definition of long ton
+		wt = wt.toPrecision(6);
+		$('#inputtonshort').val(wt);
+		
+		// metric
+		wt = wt1*2240*0.45359237; // exact definition of pound in kg
+		wt = wt.toPrecision(6);
+		$('#inputkg').val(wt);
+		$('#inputg').val(wt*1000);		
+		$('#inputtonne').val(wt/1000);
+		
+		// special
+		wt = wt1*2240*0.45359237/150;
+		wt = wt.toPrecision(6);
+		$('#inputvg').val(wt);		
+	});
+	
+	$('#inputkg').change(function() {
+		wt1 = $(this).val();
+		// metric		
+		$('#inputg').val(wt1*1000);
+		$('#inputtonne').val(wt1/1000);
+		
+		// english
+		wt = wt1/0.45359237; // exact definition of pound in kg
+		wt = wt.toPrecision(6);
+		$('#inputlb').val(wt);
+		wt = wt1/0.45359237*16;
+		wt = wt.toPrecision(6);
+		$('#inputoz').val(wt);
+		wt = wt1/0.45359237/2000; // exact definition of short ton
+		wt = wt.toPrecision(6);
+		$('#inputtonshort').val(wt);
+		wt = wt1/0.45359237/2240; // exact definition of long ton
+		wt = wt.toPrecision(6);
+		$('#inputtonlong').val(wt);
+		
+		// special
+		wt = wt1/150;
+		wt = wt.toPrecision(6);
+		$('#inputvg').val(wt);		
+	});
+	
+	$('#inputg').change(function() {
+		wt1 = $(this).val();
+		// metric		
+		$('#inputkg').val(wt1/1000);
+		$('#inputtonne').val(wt1/1000/1000);
+		
+		// english
+		wt = wt1/1000/0.45359237; // exact definition of pound in kg
+		wt = wt.toPrecision(6);
+		$('#inputlb').val(wt);
+		wt = wt1/1000/0.45359237*16;
+		wt = wt.toPrecision(6);
+		$('#inputoz').val(wt);
+		wt = wt1/1000/0.45359237/2000; // exact definition of short ton
+		wt = wt.toPrecision(6);
+		$('#inputtonshort').val(wt);
+		wt = wt1/1000/0.45359237/2240; // exact definition of long ton
+		wt = wt.toPrecision(6);
+		$('#inputtonlong').val(wt);
+		
+		// special
+		wt = wt1/1000/150;
+		wt = wt.toPrecision(6);
+		$('#inputvg').val(wt);		
+	});
+	
+	$('#inputtonne').change(function() {
+		wt1 = $(this).val();
+		// metric		
+		$('#inputkg').val(wt1*1000);
+		$('#inputg').val(wt1*1000*1000);		
+		
+		// english
+		wt = wt1*1000/0.45359237; // exact definition of pound in kg
+		wt = wt.toPrecision(6);
+		$('#inputlb').val(wt);
+		wt = wt1*1000/0.45359237*16;
+		wt = wt.toPrecision(6);
+		$('#inputoz').val(wt);
+		wt = wt1*1000/0.45359237/2000; // exact definition of short ton
+		wt = wt.toPrecision(6);
+		$('#inputtonshort').val(wt);
+		wt = wt1*1000/0.45359237/2240; // exact definition of long ton
+		wt = wt.toPrecision(6);
+		$('#inputtonlong').val(wt);
+		
+		// special
+		wt = wt1*1000/150;
+		wt = wt.toPrecision(6);
+		$('#inputvg').val(wt);		
+	});
+	
+	$('#inputvg').change(function() {
+		wt1 = $(this).val();
+		// metric
+		wt = wt1*150;
+		$('#inputkg').val(wt);
+		$('#inputg').val(wt*1000);
+		$('#inputtonne').val(wt/1000);
+		
+		// english
+		wt = wt1*150/0.45359237; // exact definition of pound in kg
+		wt = wt.toPrecision(6);
+		$('#inputlb').val(wt);
+		
+		wt = wt1*150/0.45359237*16;
+		wt = wt.toPrecision(6);
+		$('#inputoz').val(wt);
+		
+		wt = wt1*150/2000; // exact definition of short ton
+		wt = wt.toPrecision(6);
+		$('#inputtonshort').val(wt);
+		
+		wt = wt1*150/2240; // exact definition of long ton
+		wt = wt.toPrecision(6);
+		$('#inputtonlong').val(wt);				
+	});
+	
+	// TIME
+	var t;
+	$('#inputyear').change(function() {
+		t1 = $(this).val();
+		t = t1*12;
+		$('#inputmonth').val(t);
+		
+		t = t1*52.1775;
+		$('#inputweek').val(t);
+		
+		t = t1*365.242;
+		$('#inputday').val(t);
+		
+		t = t1*365.242*24;
+		t = t.toPrecision(6);
+		$('#inputhour').val(t);
+		
+		t = t1*365.242*24*60;
+		t = t.toPrecision(6);
+		$('#inputminute').val(t);
+		
+		t = t1*365.242*24*3600;
+		t = t.toPrecision(6);
+		$('#inputsecond').val(t);
+	});
+	
+	$('#inputmonth').change(function() {
+		t1 = $(this).val();
+		t = t1/12;
+		t = t.toPrecision(6);
+		$('#inputyear').val(t);
+		
+		t = t1*4.34812;
+		t = t.toPrecision(6);
+		$('#inputweek').val(t);
+		
+		t = t1*4.34812*7;
+		t = t.toPrecision(6);
+		$('#inputday').val(t);
+		
+		t = t1*4.34812*7*24;
+		t = t.toPrecision(6);
+		$('#inputhour').val(t);
+		
+		t = t1*4.34812*7*24*60;
+		t = t.toPrecision(6);
+		$('#inputminute').val(t);
+		
+		t = t1*4.34812*7*24*3600;
+		t = t.toPrecision(6);
+		$('#inputsecond').val(t);
+	});
+	
+	$('#inputweek').change(function() {
+		t1 = $(this).val();
+		t = t1/52;
+		t = t.toPrecision(6);
+		$('#inputyear').val(t);
+		
+		t = t1/4.34812;
+		t = t.toPrecision(6);
+		$('#inputmonth').val(t);
+		
+		t = t1*7;
+		$('#inputday').val(t);
+		
+		t = t1*7*24;
+		$('#inputhour').val(t);
+		
+		t = t1*7*24*60;
+		$('#inputminute').val(t);
+		
+		t = t1*7*24*3600;
+		$('#inputsecond').val(t);
+	});
+	
+	$('#inputday').change(function() {
+		t1 = $(this).val();
+		
+		t = t1/365.242;
+		t = t.toPrecision(6);
+		$('#inputyear').val(t);
+		
+		t = t1/30.4368;
+		t = t.toPrecision(6);
+		$('#inputmonth').val(t);
+		
+		t = t1/7;
+		t = t.toPrecision(6);
+		$('#inputweek').val(t);		
+		
+		t = t1*24;
+		$('#inputhour').val(t);
+		
+		t = t1*24*60;
+		$('#inputminute').val(t);
+		
+		t = t1*24*3600;
+		$('#inputsecond').val(t);
+	});
+
+	$('#inputhour').change(function() {
+		t1 = $(this).val();
+		t = t1/24/365.242;
+		t = t.toPrecision(6);
+		$('#inputyear').val(t);
+		
+		t = t1/24/30.4368;
+		t = t.toPrecision(6);
+		$('#inputmonth').val(t);
+		
+		t = t1/24/7;
+		t = t.toPrecision(6);
+		$('#inputweek').val(t);				
+		
+		t = t1/24;
+		t = t.toPrecision(6);
+		$('#inputday').val(t);				
+		
+		t = t1*60;
+		$('#inputminute').val(t);
+		
+		t = t1*3600;
+		$('#inputsecond').val(t);
+	});
+	
+	$('#inputminute').change(function() {
+		t1 = $(this).val();
+		t = t1/60/24/365.242;
+		t = t.toPrecision(6);
+		$('#inputyear').val(t);
+		
+		t = t1/60/24/30.4368;
+		t = t.toPrecision(6);
+		$('#inputmonth').val(t);
+		
+		t = t1/60/24/7;
+		t = t.toPrecision(6);
+		$('#inputweek').val(t);				
+		
+		t = t1/60/24;
+		t = t.toPrecision(6);
+		$('#inputday').val(t);				
+		
+		t = t1/60;
+		t = t.toPrecision(6);
+		$('#inputhour').val(t);
+		
+		t = t1*60;
+		$('#inputsecond').val(t);
+	});
+	
+	$('#inputsecond').change(function() {
+		t1 = $(this).val();
+		t = t1/3600/24/365.242;
+		t = t.toPrecision(6);
+		$('#inputyear').val(t);
+		t = t1/3600/24/30.4368;
+		t = t.toPrecision(6);
+		$('#inputmonth').val(t);
+		t = t1/3600/24/7;
+		t = t.toPrecision(6);
+		$('#inputweek').val(t);				
+		t = t1/3600/24;
+		t = t.toPrecision(6);
+		$('#inputday').val(t);				
+		t = t1/3600;
+		t = t.toPrecision(6);
+		$('#inputhour').val(t);
+		t = t1/60;
+		t = t.toPrecision(6);
+		$('#inputminute').val(t);
+	});
+	
+	// TEMPERATURE
+	var temp;
+	$('#inputcelsius').change(function() {
+		temp1 = Number($(this).val());
+		temp = temp1*9/5 + 32;
+		$('#inputfahrenheit').val(temp);
+		
+		temp = temp1 + 273.15;
+		$('#inputkelvin').val(temp);
+	});
+	
+	$('#inputfahrenheit').change(function() {
+		temp1 = Number($(this).val());
+		temp = (temp1-32)*5/9;
+		$('#inputcelsius').val(temp);
+		
+		temp = ((temp1-32)*5/9) + 273.15;
+		$('#inputkelvin').val(temp);
+	});
+	
+	$('#inputkelvin').change(function() {
+		temp1 = Number($(this).val());
+		temp = (temp1 - 273.15)*9/5 + 32;
+		$('#inputfahrenheit').val(temp);
+		
+		temp = temp1 - 273.15;
+		$('#inputcelsius').val(temp);
+	});
+	
+	// VELOCITY
+	var vel;
+	$('#inputkph').change(function() {
+		vel1 = $(this).val();		
+		// english		
+		vel = (vel1/1.60934)
+		vel = vel.toPrecision(6);
+		$('#inputmph').val(vel);
+		
+		// metric
+		vel = (vel1*1000)/3600;
+		vel = vel.toPrecision(6);
+		$('#inputmps').val(vel);	
+	});
+	
+	$('#inputmph').change(function() {
+		vel1 = $(this).val();		
+		
+		vel = (vel1*1.60934)
+		$('#inputkph').val(vel);
+				
+		vel = (vel1*1.60934*1000)/3600;
+		vel = vel.toPrecision(6);
+		$('#inputmps').val(vel);	
+	});
+	
+	$('#inputmps').change(function() {
+		vel1 = $(this).val();		
+		// english		
+		vel = (vel1/1000)*3600/1.60934
+		vel = vel.toPrecision(6);
+		$('#inputmph').val(vel);
+		
+		// metric
+		vel = (vel1/1000)*3600;
+		vel = vel.toPrecision(6);
+		$('#inputkph').val(vel);	
+	});
+		
+	// PRESSURE
+	var pres;
+	$('#inputatm').change(function() {
+		pres1 = Number($(this).val());
+		
+		pres = pres1*101325;
+		$('#inputpa').val(pres);
+		
+		pres = pres1*1.01325;
+		$('#inputbar').val(pres);
+		
+		pres = pres1*29.9213;
+		$('#inputinHg').val(pres);
+		
+		pres = pres1*760.001;
+		$('#inputmmHg').val(pres);
+		
+		pres = pres1*760;
+		$('#inputtorr').val(pres);
+				
+		// 1 psi = 1 lbf / (1 in)^2 -> convert to Pascals -> convert to atm		
+		psipa = 4.4482216152605/(Math.pow(.0254,2)); // 1 psi is this much Pascals
+		pres = pres1*101325/psipa;		
+		pres = pres.toPrecision(6);
+		$('#inputpsi').val(pres);
+	});
+	
+	$('#inputpa').change(function() {
+		pres1 = Number($(this).val());
+		pres1 = pres1/101325;
+		
+		pres = pres1;
+		pres = pres.toPrecision(6);
+		$('#inputatm').val(pres);
+		
+		pres = pres1*1.01325;
+		$('#inputbar').val(pres);
+		
+		pres = pres1*29.9213;
+		pres = pres.toPrecision(6);
+		$('#inputinHg').val(pres);
+		
+		pres = pres1*760.001;
+		pres = pres.toPrecision(6);
+		$('#inputmmHg').val(pres);
+		
+		pres = pres1*760;
+		pres = pres.toPrecision(6);
+		$('#inputtorr').val(pres);
+				
+		// 1 psi = 1 lbf / (1 in)^2 -> convert to Pascals -> convert to atm		
+		psipa = 4.4482216152605/(Math.pow(.0254,2)); // 1 psi is this much Pascals
+		pres = pres1*101325/psipa;
+		pres = pres.toPrecision(6);
+		$('#inputpsi').val(pres);
+	});
+	
+	$('#inputbar').change(function() {
+		pres1 = Number($(this).val());
+		pres1 = pres1/1.01325;
+		
+		pres = pres1;
+		pres = pres.toPrecision(6);
+		$('#inputatm').val(pres);
+		
+		pres = pres1*101325;
+		$('#inputpa').val(pres);
+		
+		pres = pres1*29.9213;
+		pres = pres.toPrecision(6);
+		$('#inputinHg').val(pres);
+		
+		pres = pres1*760.001;
+		pres = pres.toPrecision(6);
+		$('#inputmmHg').val(pres);
+		
+		pres = pres1*760;
+		pres = pres.toPrecision(6);
+		$('#inputtorr').val(pres);
+				
+		// 1 psi = 1 lbf / (1 in)^2 -> convert to Pascals -> convert to atm		
+		psipa = 4.4482216152605/(Math.pow(.0254,2)); // 1 psi is this much Pascals
+		pres = pres1*101325/psipa;
+		pres = pres.toPrecision(6);
+		$('#inputpsi').val(pres);
+	});
+	
+	$('#inputinHg').change(function() {
+		pres1 = Number($(this).val());
+		pres1 = pres1/29.9213;
+		
+		pres = pres1;
+		pres = pres.toPrecision(6);
+		$('#inputatm').val(pres);
+		
+		pres = pres1*101325;
+		pres = pres.toPrecision(6);
+		$('#inputpa').val(pres);
+		
+		pres = pres1*1.01325;
+		$('#inputbar').val(pres);				
+		
+		pres = pres1*760.001;
+		pres = pres.toPrecision(6);
+		$('#inputmmHg').val(pres);
+		
+		pres = pres1*760;
+		pres = pres.toPrecision(6);
+		$('#inputtorr').val(pres);
+				
+		// 1 psi = 1 lbf / (1 in)^2 -> convert to Pascals -> convert to atm		
+		psipa = 4.4482216152605/(Math.pow(.0254,2)); // 1 psi is this much Pascals
+		pres = pres1*101325/psipa;
+		pres = pres.toPrecision(6);
+		$('#inputpsi').val(pres);
+	});
+	
+	$('#inputmmHg').change(function() {
+		pres1 = Number($(this).val());
+		pres1 = pres1/760.001;
+		
+		pres = pres1;
+		pres = pres.toPrecision(6);
+		$('#inputatm').val(pres);
+		
+		pres = pres1*101325;
+		pres = pres.toPrecision(6);
+		$('#inputpa').val(pres);
+		
+		pres = pres1*1.01325;
+		$('#inputbar').val(pres);				
+		
+		pres = pres1*29.9213;
+		pres = pres.toPrecision(6);
+		$('#inputinHg').val(pres);
+		
+		pres = pres1*760;
+		pres = pres.toPrecision(6);
+		$('#inputtorr').val(pres);
+				
+		// 1 psi = 1 lbf / (1 in)^2 -> convert to Pascals -> convert to atm		
+		psipa = 4.4482216152605/(Math.pow(.0254,2)); // 1 psi is this much Pascals
+		pres = pres1*101325/psipa;
+		pres = pres.toPrecision(6);
+		$('#inputpsi').val(pres);
+	});
+	
+	$('#inputtorr').change(function() {
+		pres1 = Number($(this).val());
+		pres1 = pres1/760;
+		
+		pres = pres1;
+		pres = pres.toPrecision(6);
+		$('#inputatm').val(pres);
+		
+		pres = pres1*101325;
+		pres = pres.toPrecision(6);
+		$('#inputpa').val(pres);
+		
+		pres = pres1*1.01325;
+		$('#inputbar').val(pres);				
+		
+		pres = pres1*29.9213;
+		pres = pres.toPrecision(6);
+		$('#inputinHg').val(pres);
+		
+		pres = pres1*760.001;
+		pres = pres.toPrecision(6);
+		$('#inputmmHg').val(pres);
+				
+		// 1 psi = 1 lbf / (1 in)^2 -> convert to Pascals -> convert to atm		
+		psipa = 4.4482216152605/(Math.pow(.0254,2)); // 1 psi is this much Pascals
+		pres = pres1*101325/psipa;
+		pres = pres.toPrecision(6);
+		$('#inputpsi').val(pres);
+	});
+	
+	$('#inputpsi').change(function() {
+		pres1 = Number($(this).val());
+		// convert to atms
+		// 1 psi = 1 lbf / (1 in)^2 -> convert to Pascals -> convert to atm		
+		psipa = 4.4482216152605/(Math.pow(.0254,2)); // 1 psi is this much Pascals
+		pres1 = pres1*psipa/101325;		
+		
+		pres = pres1;
+		pres = pres.toPrecision(6);
+		$('#inputatm').val(pres);
+		
+		pres = pres1*101325;
+		pres = pres.toPrecision(6);
+		$('#inputpa').val(pres);
+		
+		pres = pres1*1.01325;
+		pres = pres.toPrecision(6);
+		$('#inputbar').val(pres);				
+		
+		pres = pres1*29.9213;
+		pres = pres.toPrecision(6);
+		$('#inputinHg').val(pres);
+		
+		pres = pres1*760.001;
+		pres = pres.toPrecision(6);
+		$('#inputmmHg').val(pres);
+		
+		pres = pres1*760;
+		pres = pres.toPrecision(6);
+		$('#inputtorr').val(pres);					
+	});
+});
+
+
+
+</script>
+</head>
+
+<body>
+<h1>Shen's Unit Converter</h1>
+<span id='quoteline'>Daily Quote</span>
+
+<div id='intContent'>
+<div id='left'>
+	<h2>Distance</h2>
+	<form id='formdistance'>
+		<label>Kilometers</label>
+		<input type='text' value='' id='inputkm' />
+		<br/>
+		<label>Meters</label>
+		<input type='text' value='' id='inputm' />
+		<br/>
+		<label>Centimeters</label>
+		<input type='text' value='' id='inputcm' />
+		<br/>
+		<label>Miles</label>
+		<input type='text' value='' id='inputmi' />
+		<br/>
+		<label>Yards</label>
+		<input type='text' value='' id='inputyd' />
+		<br/>
+		<label>Feet</label>
+		<input type='text' value='' id='inputft' />
+		<br/>
+		<label>Inches</label>
+		<input type='text' value='' id='inputin' />
+	</form>
+	
+	<h2>Weight</h2>
+	<form id='formweight'>
+		<label>Pounds (lb)</label>
+		<input type='text' value='' id='inputlb' />
+		<br/>
+		<label>Ounces (oz)</label>
+		<input type='text' value='' id='inputoz' />
+		<br/>
+		<label>Short Ton*</label>
+		<input type='text' value='' id='inputtonshort' />
+		<br/>
+		<label>Long Ton**</label>
+		<input type='text' value='' id='inputtonlong' />
+		<br/>
+		<label>Tonne (metric ton)</label>
+		<input type='text' value='' id='inputtonne' />
+		<br/>
+		<label>Kilograms (kg)</label>
+		<input type='text' value='' id='inputkg' />
+		<br/>
+		<label>Grams (g)</label>
+		<input type='text' value='' id='inputg' />
+		<br/>
+		<label>Virgil (vg)</label>
+		<input type='text' value='' id='inputvg' />
+		<br/>
+	</form>
+	*Most commonly used in the United States.<br/>
+	**Most commonly used in the United Kingdom and the Commonwealth.<br/>
+</div>
+
+<div id='right'>
+	<h2>Velocity</h2>
+	<form id='formvelocity'>
+		<label>Kilometers per hour (KPH)</label>
+		<input type='text' value='' id='inputkph' />
+		<br/>
+		<label>Miles per hour (MPH)</label>
+		<input type='text' value='' id='inputmph' />
+		<br/>
+		<label>Meters per second (mps)</label>
+		<input type='text' value='' id='inputmps' />
+		<br/>
+	</form>
+	
+	<h2>Pressure</h2>
+	<form id='formpressure'>
+		<label>Atmospheres (atm)</label>
+		<input type='text' value='' id='inputatm' />		
+		<br/>
+		<label>Pascals (Pa)</label>
+		<input type='text' value='' id='inputpa' />
+		<br/>
+		<label>Bars</label>
+		<input type='text' value='' id='inputbar' />
+		<br/>
+		<label>Mercury (inch)</label>
+		<input type='text' value='' id='inputinHg' />
+		<br/>
+		<label>Mercury (mmHg)</label>
+		<input type='text' value='' id='inputmmHg' />
+		<br/>
+		<label>Torr</label>
+		<input type='text' value='' id='inputtorr' />
+		<br/>
+		<label>Pounds per square inch (psi)</label>
+		<input type='text' value='' id='inputpsi' />
+		<br/>
+	</form>
+</div>
+
+<div id='center'>
+	<h2>Time</h2>
+	<table>
+	<form id='formtime'>
+		<tr><td>
+		<label>Years</label>
+		</td><td>
+		<input type='text' value='' id='inputyear' />
+		</td></tr>
+		<tr><td>
+		<label>Months</label>
+		</td><td>
+		<input type='text' value='' id='inputmonth' />		
+		</td></tr>
+		<tr><td>
+		<label>Weeks</label>
+		</td><td>
+		<input type='text' value='' id='inputweek' />		
+		</td></tr>
+		<tr><td>
+		<label>Days</label>
+		</td><td>
+		<input type='text' value='' id='inputday' />
+		</td></tr>
+		<tr><td>
+		<label>Hours</label>
+		</td><td>
+		<input type='text' value='' id='inputhour' />
+		</td></tr>
+		<tr><td>
+		<label>Minutes</label>
+		</td><td>
+		<input type='text' value='' id='inputminute' />
+		</td></tr>
+		<tr><td>
+		<label>Seconds</label>
+		</td><td>
+		<input type='text' value='' id='inputsecond' />
+		</td></tr>
+	</form>
+	</table>
+	
+	<h2>Temperature</h2>
+	<table>
+	<form id='temperature'>
+		<tr><td>
+		<label>Celsius</label>
+		</td><td>
+		<input type='text' value='' id='inputcelsius' />
+		</td></tr>
+		
+		<tr><td>
+		<label>Fahrenheit</label>
+		</td><td>
+		<input type='text' value='' id='inputfahrenheit' />
+		</td></tr>
+		
+		<tr><td>
+		<label>Kelvin</label>
+		</td><td>
+		<input type='text' value='' id='inputkelvin' />
+		</td></tr>
+	</form>
+	</table>
+</div>
+
+<!-- extends box to contain both side floats instead of taking its height from #center -->
+<div style='clear:both;'></div>
+
+</div>
+</body>
+</html>
